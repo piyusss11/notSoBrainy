@@ -1,6 +1,6 @@
 import { Request, Response, Router } from "express";
 import bcrypt from "bcrypt";
-import { validateUserRegistration } from "../utils/zod";
+import { validateUserLogin, validateUserRegistration } from "../utils/zod";
 import { User } from "../models/User";
 import { z } from "zod";
 const userRouter = Router();
@@ -34,4 +34,19 @@ userRouter.post(
   }
 );
 
-export default userRouter
+userRouter.post(
+  "/login",
+  async (req: Request, res: Response): Promise<void> => {
+    try {
+      const validationData = validateUserLogin(req.body);
+      const { password, userName } = validationData;
+    } catch (err) {
+      if (err instanceof z.ZodError) {
+        res.status(400).json({ message: err.errors });
+      } else {
+        res.status(500).json({ message: "error loging in user" });
+      }
+    }
+  }
+);
+export default userRouter;
