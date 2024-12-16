@@ -25,7 +25,6 @@ const userSchema = new mongoose.Schema<IUser>({
   password: {
     type: String,
     minLength: 8,
-    maxlength:20,
     required: true,
   },
 });
