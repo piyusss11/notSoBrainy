@@ -1,7 +1,15 @@
 import mongoose, { mongo } from "mongoose";
 import { IContent } from "../types/schema";
 
-const contentTypes = ["image", "video", "article", "audio"];
+const contentTypes = [
+  "image",
+  "video",
+  "article",
+  "audio",
+  "tweet",
+  "youtube",
+  "link",
+];
 const contentSchema = new mongoose.Schema<IContent>({
   userId: {
     type: mongoose.Schema.Types.ObjectId,
