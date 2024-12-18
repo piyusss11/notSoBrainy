@@ -26,7 +26,10 @@ contentRouter.get(
   async (req: Request, res: Response) => {
     try {
       const userId = req.user?.id;
-      const getMycontents = await Content.find({ userId });
+      const getMycontents = await Content.find({ userId }).populate(
+        "userId",
+        "userName"
+      );
       if (!getMycontents) {
         res.status(404).json({ message: "No content found" });
         return;
@@ -46,9 +49,6 @@ contentRouter.delete(
     try {
       const userId = req.user?._id;
       const contentId = req.params.id;
-      console.log("Content ID:", contentId);
-      console.log("User ID:", userId);
-      
       const deleteContent = await Content.deleteOne({
         _id: contentId,
         userId: userId,
@@ -59,8 +59,6 @@ contentRouter.delete(
           .json({ message: "content is not yours or content is not present" });
         return;
       }
-
-      console.log("Delete Result:", deleteContent);
       res.status(200).json({ message: "Content Deleted succesfully" });
     } catch (error) {
       res
