@@ -11,14 +11,25 @@ linkRouter.post("/shareLink", UserAuth, async (req: Request, res: Response) => {
   try {
     const userId = req.user?._id;
     const { shareOn } = req.body;
+    // to delete the link for sharing
     if (!shareOn) {
-      res
-        .status(400)
-        .json({ message: "sharing i not switched on by the user" });
+      const deleteLink = await Link.deleteOne({ userId });
+      res.status(200).json({ message: "Your Sharing has been turned off" });
       return;
     }
+    // checking and giving if he has already shared the link before
+    const alreadyShared = await Link.findOne({ userId });
+    if (alreadyShared) {
+      res
+        .status(200)
+        .json({
+          message: "Link already shared",
+          yourShareableLink: alreadyShared.hash,
+        });
+      return;
+    }
+    // creating a new link to be shared now
     const linkHash = randomHash(10);
-    console.log(linkHash);
 
     if (!linkHash) {
       res.status(500).json({ message: "Error creating link string" });
@@ -37,39 +48,34 @@ linkRouter.post("/shareLink", UserAuth, async (req: Request, res: Response) => {
     res.status(500).json({ message: "Error creating link", error: error });
   }
 });
-linkRouter.get(
-  "/getLink/:link",
-  UserAuth,
-  async (req: Request, res: Response) => {
-    try {
-      const linkHash = req.params.link;
-      const getLink = await Link.findOne({ hash: linkHash });
-      if (!getLink) {
-        res.status(404).json({ message: "Link not found" });
-        return;
-      }
-      const getUserInfo = await User.findById(getLink.userId);
-      if (!getUserInfo) {
-        res.status(404).json({ message: "User not found of requested user" });
-        return;
-      }
-      const getContents = await Content.find({ userId: getLink.userId });
-      if (!getContents) {
-        res
-          .status(404)
-          .json({ message: "Contents not found of requested user" });
-        return;
-      }
-      res
-        .status(200)
-        .json({
-          message: "contents found successfully",
-          user: getUserInfo,
-          contents: getContents,
-        });
-    } catch (error) {
-      res.status(500).json({ message: "Error getting contents", error: error });
+linkRouter.get("/getLink/:link", async (req: Request, res: Response) => {
+  try {
+    const linkHash = req.params.link;
+    const getLink = await Link.findOne({ hash: linkHash });
+    if (!getLink) {
+      res.status(404).json({ message: "Link not found" });
+      return;
     }
+    const getUserInfo = await User.findById(getLink.userId);
+    if (!getUserInfo) {
+      res.status(404).json({ message: "User not found of requested user" });
+      return;
+    }
+    const getContents = await Content.find({ userId: getLink.userId });
+    if (!getContents) {
+      res.status(404).json({ message: "Contents not found of requested user" });
+      return;
+    }
+    res.status(200).json({
+      message: "contents found successfully",
+      user: {
+        userName: getUserInfo.userName,
+        firstName: getUserInfo.firstName,
+      },
+      contents: getContents,
+    });
+  } catch (error) {
+    res.status(500).json({ message: "Error getting contents", error: error });
   }
-);
+});
 export default linkRouter;
