@@ -42,7 +42,7 @@ const ContentDialogBox: FC<ContentDialogBoxProps> = ({ open, onClose }) => {
             <option className="text-black" value="twitter">Twitter</option>
             <option className="text-black" value="youtube">Youtube</option>
           </select>
-          <Input placeholder="Link" />
+          <Input placeholder="Link/Text " />
         </div>
         <div className="flex justify-center mt-4">
           <Button size="md" variant="primary" text="Submit" />

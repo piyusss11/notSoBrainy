@@ -9,7 +9,7 @@ const ShareIcon = (props: IconProps) => {
       viewBox="0 0 24 24"
       strokeWidth="1.5"
       stroke="currentColor"
-      className={`${sizeStyles[props.size]}`}
+      className={`${sizeStyles[props.size]} ${props.className}`}
     >
       <path
         strokeLinecap="round"

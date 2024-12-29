@@ -4,6 +4,7 @@ import ShareIcon from "./components/icons/ShareIcon";
 import AddIcon from "./components/icons/AddIcon";
 import Card from "./components/ui/Card";
 import ContentDialogBox from "./components/ui/ContentDialogBox";
+import SideBar from "./components/ui/SideBar";
 
 const App = () => {
   const [contentBoxOpen, setContentBoxOpen] = useState(false);
@@ -11,11 +12,12 @@ const App = () => {
     "Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsum exercitationem laborum dolor explicabo quas eaque quo dicta placeat! Veniam, hic eum inventore sapiente ducimus voluptas";
   return (
     <>
-      <ContentDialogBox
-        open={contentBoxOpen}
-        onClose={() => setContentBoxOpen(false)}
-      />
-      <div className="p-10 bg-gray-100">
+      <SideBar />
+      <div className="p-10 min-h-screen md:ml-72 bg-gray-100">
+        <ContentDialogBox
+          open={contentBoxOpen}
+          onClose={() => setContentBoxOpen(false)}
+        />
         <div className="flex justify-between items-center">
           <h1 className=" md:text-3xl">All Notes</h1>
           <div className="flex items-center gap-4">

@@ -9,7 +9,7 @@ const YoutubeIcon = (props: IconProps) => {
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       color="#000000"
-      className={`${sizeStyles[props.size]}`}
+      className={`${sizeStyles[props.size]} ${props.className}`}
     >
       <path
         d="M14 12L10.5 14V10L14 12Z"
