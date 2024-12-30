@@ -6,6 +6,7 @@ import ShareIcon from "../icons/ShareIcon";
 import TwitterIcon from "../icons/TwitterIcon";
 import YoutubeIcon from "../icons/YoutubeIcon";
 interface CardProps {
+  id: string;
   key?: string;
   title: string;
   typeOfContent: "youtube" | "tweet" | "article" | "link";
@@ -16,11 +17,11 @@ interface CardProps {
 // const contentTypes = ["article", "youtube", "tweet", "link"];
 const Card = (props: CardProps) => {
   const handleDelete = async () => {
-    console.log(props.key);
+    console.log(props.id);
 
     try {
-      await axios.post(
-        `${import.meta.env.VITE_LOCALHOST}/api/v1/content/delete/${props.key}`,
+      await axios.delete(
+        `${import.meta.env.VITE_LOCALHOST}/api/v1/content/delete/${props.id}`,
         {
           headers: {
             token: localStorage.getItem("token"),
@@ -28,9 +29,8 @@ const Card = (props: CardProps) => {
         }
       );
       console.log("content deleted");
-      
     } catch (error) {
-      console.log(error);
+      console.log("error deleting content:", error);
     }
   };
   const formattedDate = new Date(props.createdAt).toLocaleDateString("en-GB", {
@@ -54,7 +54,7 @@ const Card = (props: CardProps) => {
             <ShareIcon size="sm" />
           </a>
           <div onClick={handleDelete}>
-            <DeleteIcon size="sm" />
+            <DeleteIcon className="cursor-pointer" size="sm" />
           </div>
         </div>
       </div>

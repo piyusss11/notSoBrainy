@@ -44,6 +44,7 @@ const DashBoard = () => {
           {myContents && myContents.map((content: MyContent) => (
             <Card
               key={content?._id}
+              id ={content?._id}
               typeOfContent={content?.typeOfContent}
               title={content?.title}
               tags={content?.tags}

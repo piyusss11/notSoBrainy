@@ -13,8 +13,8 @@ const ContentDialogBox: FC<ContentDialogBoxProps> = ({ open, onClose }) => {
   const titleRef = useRef<HTMLInputElement>(null);
   const linkRef = useRef<HTMLInputElement>(null);
   const typeRef = useRef<HTMLSelectElement>(null);
-  const [tags, setTags] = useState<string[]>([]); // Tags as an array
-  const [currentTag, setCurrentTag] = useState<string>(""); // Current tag input
+  const [tags, setTags] = useState<string[]>([]); 
+  const [currentTag, setCurrentTag] = useState<string>(""); 
 
   if (!open) {
     return null;
@@ -54,7 +54,6 @@ const ContentDialogBox: FC<ContentDialogBoxProps> = ({ open, onClose }) => {
       console.log(err);
     }
   };
-
   const handleAddTag = () => {
     if (currentTag.trim() && !tags.includes(currentTag.trim())) {
       setTags((prevTags) => [...prevTags, currentTag.trim()]);
