@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link} from "react-router-dom";
 import Button from "../components/ui/Button";
 import Input from "../components/ui/Input";
 import { useRef, useState } from "react";
@@ -21,7 +21,9 @@ const SignIn = () => {
           password,
         }
       );
-      console.log(response);
+      const jwt = response.data.token;
+      localStorage.setItem("token", jwt);
+      window.location.reload();
     } catch (err) {
       console.log(err);
       const error = err as AxiosError<LoginErrorResponse>;

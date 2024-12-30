@@ -6,12 +6,13 @@ const contentRouter = Router();
 contentRouter.post("/create", UserAuth, async (req: Request, res: Response) => {
   try {
     const userId = req.user?._id;
-    const { title, typeOfContent, link } = req.body;
+    const { title, typeOfContent, link, tags } = req.body;
     const createContent = await Content.create({
       userId,
       title,
       typeOfContent,
       link,
+      tags,
     });
     res
       .status(201)

@@ -6,12 +6,11 @@ import Card from "../components/ui/Card";
 import ContentDialogBox from "../components/ui/ContentDialogBox";
 import SideBar from "../components/ui/SideBar";
 import useContent from "../hooks/useContent";
+import { MyContent } from "../types/myTypes";
 
 const DashBoard = () => {
   const [contentBoxOpen, setContentBoxOpen] = useState(false);
   const myContents = useContent();
-  const lorem =
-    "Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsum exercitationem laborum dolor explicabo quas eaque quo dicta placeat! Veniam, hic eum inventore sapiente ducimus voluptas";
   return (
     <>
       <SideBar />
@@ -42,27 +41,16 @@ const DashBoard = () => {
           </div>
         </div>
         <div className="flex flex-wrap gap-4 mt-4 justify-center md:justify-normal">
-          <Card
-            contentType="article"
-            title="Project Ideas"
-            tags={["react", "nextjs", "tailwind", "GSap", "faasfasfasf"]}
-            date="28/12/24"
-            content={lorem}
-          />
-          <Card
-            contentType="youtube"
-            title="firstVideo"
-            tags={["react", "nextjs", "tailwind", "GSap", "faasfasfasf"]}
-            date="28/12/24"
-            content="https://www.youtube.com/watch?v=x1TwQWWSedw"
-          />
-          <Card
-            contentType="twitter"
-            title="first tweet"
-            tags={["react", "nextjs", "tailwind", "GSap", "faasfasfasf"]}
-            date="28/12/24"
-            content="https://x.com/piyusss11/status/1870073317937549501"
-          />
+          {myContents && myContents.map((content: MyContent) => (
+            <Card
+              key={content?._id}
+              typeOfContent={content?.typeOfContent}
+              title={content?.title}
+              tags={content?.tags}
+              createdAt={content?.createdAt}
+              link={content?.link}
+            />
+          ))}
         </div>
       </div>
     </>

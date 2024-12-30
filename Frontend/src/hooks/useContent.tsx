@@ -1,16 +1,16 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { MyContent } from "../types/myTypes";
 
 const useContent = () => {
-  const [contents, setContents] = useState([]);
+  const [contents, setContents] = useState<MyContent[]>();
   const getContent = async () => {
     try {
       const response = await axios.get(
         `${import.meta.env.VITE_LOCALHOST}/api/v1/content/getMyContent`,
         { headers: { token: localStorage.getItem("token") } }
       );
-      console.log(response);
-      setContents(response);
+      setContents(response?.data?.getMycontents);
     } catch (error) {
       console.log(error);
     }
