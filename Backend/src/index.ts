@@ -4,9 +4,10 @@ import userRouter from "./routes/user";
 import dotenv from "dotenv";
 import contentRouter from "./routes/content";
 import linkRouter from "./routes/link";
+import cors from "cors"
 const app = express();
 dotenv.config();
-
+app.use(cors())
 app.use(express.json());
 app.use("/api/v1/user", userRouter);
 app.use("/api/v1/content", contentRouter);

@@ -6,6 +6,7 @@ interface ButtonProps {
   text: string;
   startIcon?: ReactElement;
   endIcon?: ReactElement;
+  className?: string;
   onClick?: () => void;
 }
 const defaultStyles = "flex items-center gap-2 outline-none rounded-lg";
@@ -26,7 +27,7 @@ const Button = (props: ButtonProps) => {
       onClick={props.onClick}
       className={`${defaultStyles} ${variantStyles[props.variant]} ${
         sizeStyles[props.size]
-      }`}
+      } ${props.className}`}
     >
       {props.startIcon}
       {props.text}

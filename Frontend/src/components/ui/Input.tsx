@@ -1,14 +1,16 @@
 interface InputProps {
   placeholder: string;
-  // reference?: any;
+  className?: string;
+  type?: string;
+  reference?: React.RefObject<HTMLInputElement>;
 }
-const Input = ({  placeholder }: InputProps) => {
+const Input = ({ placeholder, className, type, reference }: InputProps) => {
   return (
     <input
-      // ref={reference}
+      ref={reference}
       placeholder={placeholder}
-      type={"text"}
-      className="w-full px-2 py-2 border rounded my-2"
+      type={type ? type : "text"}
+      className={`w-full px-2 py-2 border rounded my-2 ${className}`}
     ></input>
   );
 };

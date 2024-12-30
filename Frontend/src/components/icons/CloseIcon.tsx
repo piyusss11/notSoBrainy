@@ -1,4 +1,4 @@
-import React from "react";
+
 import { IconProps, sizeStyles } from "./iconsInterface";
 
 const CloseIcon = (props: IconProps) => {
