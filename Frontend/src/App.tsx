@@ -3,6 +3,7 @@ import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import SignIn from "./pages/SignIn";
 import SignUp from "./pages/SignUp";
 import DashBoard from "./pages/DashBoard";
+import { RecoilRoot } from "recoil";
 
 const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
@@ -13,22 +14,26 @@ const App = () => {
   }, []);
 
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route
-          path="/"
-          element={isAuthenticated ? <DashBoard /> : <Navigate to="/signin" />}
-        />
-        <Route
-          path="/signup"
-          element={isAuthenticated ? <Navigate to="/" /> : <SignUp />}
-        />
-        <Route
-          path="/signin"
-          element={isAuthenticated ? <Navigate to="/" /> : <SignIn />}
-        />
-      </Routes>
-    </BrowserRouter>
+    <RecoilRoot>
+      <BrowserRouter>
+        <Routes>
+          <Route
+            path="/"
+            element={
+              isAuthenticated ? <DashBoard /> : <Navigate to="/signin" />
+            }
+          />
+          <Route
+            path="/signup"
+            element={isAuthenticated ? <Navigate to="/" /> : <SignUp />}
+          />
+          <Route
+            path="/signin"
+            element={isAuthenticated ? <Navigate to="/" /> : <SignIn />}
+          />
+        </Routes>
+      </BrowserRouter>
+    </RecoilRoot>
   );
 };
 

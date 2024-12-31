@@ -16,7 +16,11 @@ const useContent = () => {
     }
   };
   useEffect(() => {
-    getContent();
+    // const interval = setInterval(() => {
+    //   getContent();
+    // }, 5000);
+    // return () => clearInterval(interval);
+    getContent()
   }, []);
   return contents;
 };
