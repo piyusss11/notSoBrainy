@@ -1,16 +1,17 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
-import { MyContent } from "../types/myTypes";
+import { useEffect } from "react";
+import { useSetRecoilState } from "recoil";
+import { contentAtom } from "../store/contentState";
 
 const useContent = () => {
-  const [contents, setContents] = useState<MyContent[]>();
+  const setContent = useSetRecoilState(contentAtom);
   const getContent = async () => {
     try {
       const response = await axios.get(
         `${import.meta.env.VITE_LOCALHOST}/api/v1/content/getMyContent`,
         { headers: { token: localStorage.getItem("token") } }
       );
-      setContents(response?.data?.getMycontents);
+      setContent(response?.data?.getMycontents);
     } catch (error) {
       console.log(error);
     }
@@ -20,9 +21,9 @@ const useContent = () => {
     //   getContent();
     // }, 5000);
     // return () => clearInterval(interval);
-    getContent()
+    getContent();
   }, []);
-  return contents;
+  return {};
 };
 
 export default useContent;

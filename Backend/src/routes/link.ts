@@ -61,7 +61,7 @@ linkRouter.get("/getLink/:link", async (req: Request, res: Response) => {
       res.status(404).json({ message: "User not found of requested user" });
       return;
     }
-    const getContents = await Content.find({ userId: getLink.userId });
+    const getContents = await Content.find({ userId: getLink.userId })
     if (!getContents) {
       res.status(404).json({ message: "Contents not found of requested user" });
       return;

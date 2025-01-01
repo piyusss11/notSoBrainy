@@ -5,6 +5,7 @@ import LinkIcon from "../icons/LinkIcon";
 import ShareIcon from "../icons/ShareIcon";
 import TwitterIcon from "../icons/TwitterIcon";
 import YoutubeIcon from "../icons/YoutubeIcon";
+import { useParams } from "react-router-dom";
 interface CardProps {
   id: string;
   key?: string;
@@ -16,6 +17,7 @@ interface CardProps {
 }
 // const contentTypes = ["article", "youtube", "tweet", "link"];
 const Card = (props: CardProps) => {
+  const {id} = useParams()
   const handleDelete = async () => {
     console.log(props.id);
 
@@ -53,9 +55,9 @@ const Card = (props: CardProps) => {
             {" "}
             <ShareIcon size="sm" />
           </a>
-          <div onClick={handleDelete}>
+          {!id && <div onClick={handleDelete}>
             <DeleteIcon className="cursor-pointer" size="sm" />
-          </div>
+          </div>}
         </div>
       </div>
       <div className="flex flex-col gap-4 mt-4">

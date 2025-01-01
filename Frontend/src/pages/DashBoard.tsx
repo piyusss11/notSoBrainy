@@ -7,22 +7,18 @@ import ContentDialogBox from "../components/ui/ContentDialogBox";
 import SideBar from "../components/ui/SideBar";
 import useContent from "../hooks/useContent";
 import { MyContent } from "../types/myTypes";
-import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
-import { contentAtom } from "../store/contentState";
+import { useRecoilState, useRecoilValue } from "recoil";
 import { filterSelector, filterTypeAtom } from "../store/filterSelector";
 import useShareLink from "../hooks/useShareLink";
 import { sharedLinkAtom } from "../store/sharedLinkAtom";
 import CloseIcon from "../components/icons/CloseIcon";
-
+import loadingIcon from "../assets/loading.png"
 const DashBoard = () => {
+  useContent();
   const [contentBoxOpen, setContentBoxOpen] = useState(false);
+  const { handleCreateLink, handleDeleteLink, handleCopy } = useShareLink();
 
-  const myContents = useContent();
-  const { handleCreateLink, handleDeleteLink,handleCopy } = useShareLink();
-
-  const setContent = useSetRecoilState(contentAtom);
   const [filterType, setFilterType] = useRecoilState(filterTypeAtom);
-  setContent(myContents);
   const filteredContents = useRecoilValue(filterSelector);
   const sharedLink = useRecoilValue(sharedLinkAtom);
 
@@ -30,6 +26,13 @@ const DashBoard = () => {
     setFilterType(null);
   };
   useEffect(() => {}, [sharedLink]);
+  if (!filteredContents?.length) {
+    return (
+      <div className="absolute top-1/2 left-1/2">
+        <img className="animate-spin" src={loadingIcon} alt="loading" />
+      </div>
+    );
+  }
   return (
     <>
       <SideBar />
@@ -54,11 +57,14 @@ const DashBoard = () => {
           <div className="flex items-center gap-4">
             {sharedLink?.length > 0 ? (
               <div className="flex items-center gap-4">
-                <button onClick={handleCopy} className="bg-green-300 px-1 py-2 text-sm md:px-3 md:py-2 md:text-xs text-white rounded-md ">
+                <button
+                  onClick={handleCopy}
+                  className="bg-green-300 px-1 py-2 text-sm md:px-3 md:py-2 md:text-xs text-white rounded-md "
+                >
                   {sharedLink}
                 </button>
                 <Button
-                className="bg-red-500 hover:bg-red-400 text-white "
+                  className="bg-red-500 hover:bg-red-400 text-white "
                   variant="secondary"
                   size="sm"
                   text="Click to erase"
