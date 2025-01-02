@@ -4,6 +4,7 @@ import { useSetRecoilState } from "recoil";
 import { contentAtom } from "../store/contentState";
 
 const useContent = () => {
+
   const setContent = useSetRecoilState(contentAtom);
   const getContent = async () => {
     try {
